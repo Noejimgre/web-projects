@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mora Architectes — Cabinet d'Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #0A0A0A;
+    --white: #FAFAFA;
+    --gray: #E8E8E4;
+    --mid: #8A8A82;
+    --accent: #C4A882;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--black); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; }
+
+  /* CURSOR */
+  .cursor { width: 8px; height: 8px; background: var(--black); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s; }
+  .cursor-ring { width: 40px; height: 40px; border: 1px solid var(--black); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.25s ease; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; mix-blend-mode: multiply; }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.1em; text-decoration: none; color: var(--black); }
+  .nav-right { display: flex; align-items: center; gap: 3rem; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--black); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; transition: opacity 0.3s; }
+  .nav-links a:hover { opacity: 0.5; }
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: none; }
+  .burger span { width: 22px; height: 1px; background: var(--black); display: block; }
+
+  /* HERO */
+  .hero { height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding: 4rem; background: var(--black); }
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-right-img { width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800') center/cover; transition: transform 8s ease; }
+  .hero-right:hover .hero-right-img { transform: scale(1.05); }
+  .hero-number { font-family: 'Cormorant Garamond', serif; font-size: 8rem; color: rgba(255,255,255,0.05); line-height: 1; position: absolute; top: 2rem; left: 2rem; }
+  .hero-left h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5.5rem); color: white; font-weight: 300; line-height: 1.05; margin-bottom: 2rem; }
+  .hero-left h1 em { font-style: italic; color: var(--accent); }
+  .hero-left p { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.8; font-weight: 300; max-width: 380px; margin-bottom: 3rem; }
+  .hero-meta { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .hero-meta-item span:first-child { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: white; }
+  .hero-meta-item span:last-child { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* PROJECTS */
+  .projects { padding: 0; }
+  .projects-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 5rem 4rem 3rem; }
+  .projects-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; }
+  .projects-header a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 2px; }
+  .project-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .project-item { position: relative; overflow: hidden; aspect-ratio: 4/3; }
+  .project-item:nth-child(1) { aspect-ratio: 1; }
+  .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+  .project-item:hover .project-img { transform: scale(1.05); }
+  .project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; }
+  .project-item:hover .project-overlay { opacity: 1; }
+  .project-cat { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .project-name { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: white; font-weight: 300; }
+  .project-year { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+
+  .project-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* SERVICES */
+  .services { padding: 6rem 4rem; display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
+  .services-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 300; line-height: 1.2; }
+  .services-list { display: flex; flex-direction: column; }
+  .service-item { padding: 2rem 0; border-bottom: 1px solid var(--gray); display: grid; grid-template-columns: 3rem 1fr auto; align-items: start; gap: 1.5rem; cursor: none; transition: all 0.3s; }
+  .service-item:hover { padding-left: 1rem; }
+  .service-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--mid); margin-top: 0.2rem; }
+  .service-title { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .service-desc { font-size: 0.85rem; color: var(--mid); line-height: 1.7; font-weight: 300; }
+  .service-arrow { font-size: 1.2rem; margin-top: 0.2rem; opacity: 0; transition: opacity 0.3s; }
+  .service-item:hover .service-arrow { opacity: 1; }
+
+  /* CTA */
+  .cta-section { background: var(--black); padding: 8rem 4rem; text-align: center; }
+  .cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 5rem); color: white; font-weight: 300; line-height: 1.1; margin-bottom: 2rem; }
+  .cta-section h2 em { font-style: italic; color: var(--accent); }
+  .cta-section p { color: rgba(255,255,255,0.5); font-size: 0.9rem; max-width: 400px; margin: 0 auto 3rem; font-weight: 300; line-height: 1.8; }
+  .cta-btn { display: inline-block; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 1.2rem 3rem; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; }
+  .cta-btn:hover { background: white; color: var(--black); }
+
+  /* FOOTER */
+  footer { padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gray); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+  .footer-info { color: var(--mid); font-size: 0.8rem; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { color: var(--mid); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .footer-socials a:hover { color: var(--black); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 1.5rem; }
+    .nav-links { display: none; }
+    .burger { display: flex; }
+    .hero { grid-template-columns: 1fr; height: auto; }
+    .hero-left { padding: 7rem 1.5rem 3rem; }
+    .hero-right { height: 50vw; }
+    .project-grid { grid-template-columns: 1fr; }
+    .projects-header { padding: 3rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .services { padding: 3rem 1.5rem; grid-template-columns: 1fr; gap: 2rem; }
+    .cta-section { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="logo">MORA ARCHITECTES</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="burger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Construire <em>l'espace</em> de demain</h1>
+    <p>Cabinet d'architecture fondé à Lyon en 2008, spécialisé dans l'architecture durable et les espaces de vie contemporains.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span>120+</span><span>Projets réalisés</span></div>
+      <div class="hero-meta-item"><span>15</span><span>Collaborateurs</span></div>
+      <div class="hero-meta-item"><span>8</span><span>Prix obtenus</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-number">01</div>
+    <div class="hero-right-img"></div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="projects-header">
+    <h2>Projets sélectionnés</h2>
+    <a href="#">Voir tous les projets →</a>
+  </div>
+  <div class="project-grid">
+    <div class="project-item">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Villa Contemporaine" class="project-img">
+      <div class="project-overlay">
+        <div class="project-cat">Résidentiel</div>
+        <div class="project-name">Villa Les Pins</div>
+        <div class="project-year">2023 — Toulouse</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Bureau" class="project-img">
+      <div class="project-overlay">
+        <div class="project-cat">Tertiaire</div>
+        <div class="project-name">Campus Nexus</div>
+        <div class="project-year">2022 — Lyon</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600" alt="Intérieur" class="project-img">
+      <div class="project-overlay">
+        <div class="project-cat">Intérieur</div>
+        <div class="project-name">Appartement Presqu'île</div>
+        <div class="project-year">2023 — Lyon</div>
+      </div>
+    </div>
+    <div class="project-item">
+      <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=600" alt="Culturel" class="project-img">
+      <div class="project-overlay">
+        <div class="project-cat">Culturel</div>
+        <div class="project-name">Médiathèque du Parc</div>
+        <div class="project-year">2021 — Grenoble</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-left">
+    <h2>Notre expertise à votre service</h2>
+  </div>
+  <div class="services-list">
+    <div class="service-item">
+      <span class="service-num">01</span>
+      <div><div class="service-title">Architecture neuve</div><div class="service-desc">Conception complète de projets résidentiels, tertiaires et culturels, de l'esquisse au permis de construire.</div></div>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <span class="service-num">02</span>
+      <div><div class="service-title">Rénovation & Extension</div><div class="service-desc">Transformation et valorisation du patrimoine existant avec une approche respectueuse de l'existant.</div></div>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <span class="service-num">03</span>
+      <div><div class="service-title">Architecture d'intérieur</div><div class="service-desc">Aménagement d'espaces de vie et de travail, du concept à la livraison clés en main.</div></div>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <span class="service-num">04</span>
+      <div><div class="service-title">Conseil & AMO</div><div class="service-desc">Accompagnement en tant que maître d'œuvre ou assistant à maîtrise d'ouvrage.</div></div>
+      <span class="service-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <h2>Un projet en tête ? <em>Parlons-en.</em></h2>
+  <p>Chaque projet commence par une conversation. Décrivez-nous votre vision, nous nous chargeons du reste.</p>
+  <a href="mailto:contact@mora-architectes.fr" class="cta-btn">Prendre contact</a>
+</section>
+
+<footer>
+  <div class="footer-logo">MORA ARCHITECTES</div>
+  <div class="footer-info">© 2024 — Lyon, France</div>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Houzz</a>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX - 4 + 'px';
+    cursor.style.top = mouseY - 4 + 'px';
+  });
+  function animateCursor() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX - 20 + 'px';
+    ring.style.top = ringY - 20 + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .service-item, .project-item').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.transform = 'scale(2)'; ring.style.borderColor = 'var(--accent)'; });
+    el.addEventListener('mouseleave', () => { ring.style.transform = 'scale(1)'; ring.style.borderColor = 'var(--black)'; });
+  });
+</script>
+</body>
+</html>

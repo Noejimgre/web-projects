@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Léa Dumont — Photographe</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0C0C0C; --white: #F0EDE8; --accent: #E8C547; --mid: #555; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.15em; color: var(--white); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(240,237,232,0.6); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--accent); }
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .burger span { width: 22px; height: 1px; background: var(--white); display: block; }
+
+  /* HERO */
+  .hero { height: 100vh; position: relative; display: flex; align-items: flex-end; padding: 4rem 3rem; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1554080353-a576cf803bda?w=1200') center/cover; }
+  .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,12,12,0.95) 0%, rgba(12,12,12,0.3) 60%, transparent 100%); }
+  .hero-content { position: relative; z-index: 2; max-width: 100%; }
+  .hero-label { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 12vw, 14rem); line-height: 0.9; letter-spacing: 0.02em; color: var(--white); }
+  .hero-sub { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.15); }
+  .hero-desc { color: rgba(240,237,232,0.6); font-size: 0.9rem; line-height: 1.7; font-weight: 300; max-width: 350px; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-yellow { background: var(--accent); color: var(--bg); padding: 0.9rem 2rem; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; transition: all 0.3s; }
+  .btn-yellow:hover { background: var(--white); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.9rem 2rem; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* GALLERY */
+  .gallery { padding: 0; }
+  .gallery-header { display: flex; justify-content: space-between; align-items: center; padding: 5rem 3rem 2rem; }
+  .gallery-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 4rem); letter-spacing: 0.05em; }
+  .gallery-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; background: transparent; color: rgba(255,255,255,0.5); border: 1px solid transparent; font-family: 'Inter', sans-serif; transition: all 0.3s; }
+  .filter-btn.active, .filter-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .masonry { columns: 3; gap: 4px; padding: 0 3rem 3rem; }
+  .masonry-item { break-inside: avoid; margin-bottom: 4px; position: relative; overflow: hidden; }
+  .masonry-item img { width: 100%; display: block; transition: transform 0.6s ease, filter 0.4s; filter: saturate(0.85); }
+  .masonry-item:hover img { transform: scale(1.03); filter: saturate(1); }
+  .masonry-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); transform: translateY(100%); transition: transform 0.4s; }
+  .masonry-item:hover .masonry-info { transform: translateY(0); }
+  .masonry-info-title { font-size: 0.9rem; color: white; margin-bottom: 0.2rem; }
+  .masonry-info-cat { font-size: 0.75rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ABOUT */
+  .about { display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
+  .about-img { position: relative; overflow: hidden; min-height: 500px; }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-content { padding: 5rem 4rem; background: #111; display: flex; flex-direction: column; justify-content: center; }
+  .about-content .label { font-size: 0.75rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .about-content h2 { font-family: 'Libre Baskerville', serif; font-size: clamp(1.8rem, 2.5vw, 2.5rem); color: var(--white); line-height: 1.3; margin-bottom: 1.5rem; }
+  .about-content h2 em { font-style: italic; color: rgba(240,237,232,0.6); }
+  .about-content p { color: rgba(240,237,232,0.55); font-size: 0.9rem; line-height: 1.9; font-weight: 300; margin-bottom: 1rem; }
+  .about-skills { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+  .skill-tag { padding: 0.4rem 1rem; border: 1px solid rgba(232,197,71,0.4); color: var(--accent); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* PRICING */
+  .pricing { padding: 6rem 3rem; }
+  .pricing-header { text-align: center; margin-bottom: 4rem; }
+  .pricing-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 4rem); letter-spacing: 0.05em; }
+  .pricing-header p { color: rgba(255,255,255,0.5); margin-top: 0.5rem; font-weight: 300; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--mid); }
+  .price-card { background: var(--bg); padding: 3rem 2rem; transition: background 0.3s; }
+  .price-card:hover, .price-card.featured { background: #141414; }
+  .price-card.featured { outline: 1px solid var(--accent); }
+  .price-cat { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .price-name { font-family: 'Libre Baskerville', serif; font-size: 1.5rem; margin-bottom: 1rem; }
+  .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .price-amount span { font-size: 1.2rem; }
+  .price-note { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 2rem; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.5rem; }
+  .price-features li { font-size: 0.85rem; color: rgba(255,255,255,0.65); padding-left: 1.5rem; position: relative; font-weight: 300; }
+  .price-features li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+  .price-btn { display: block; text-align: center; padding: 0.9rem; border: 1px solid rgba(255,255,255,0.2); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); transition: all 0.3s; }
+  .price-btn:hover, .price-card.featured .price-btn { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+  /* CONTACT */
+  .contact { padding: 6rem 3rem; max-width: 700px; margin: 0 auto; text-align: center; }
+  .contact h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); letter-spacing: 0.05em; line-height: 0.9; margin-bottom: 1.5rem; }
+  .contact p { color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.8; margin-bottom: 3rem; }
+  .contact-email { font-family: 'Libre Baskerville', serif; font-size: clamp(1.2rem, 2vw, 1.8rem); color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; font-style: italic; transition: color 0.3s; }
+  .contact-email:hover { color: var(--white); }
+
+  /* FOOTER */
+  footer { padding: 2rem 3rem; border-top: 1px solid #1A1A1A; display: flex; justify-content: space-between; align-items: center; }
+  footer span { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+  .social-links { display: flex; gap: 1.5rem; }
+  .social-links a { color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+  .social-links a:hover { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .burger { display: flex; }
+    .hero { padding: 2rem 1.5rem; }
+    .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .gallery-header { padding: 3rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .masonry { columns: 2; padding: 0 1.5rem 2rem; }
+    .about { grid-template-columns: 1fr; }
+    .about-img { min-height: 300px; }
+    .about-content { padding: 3rem 1.5rem; }
+    .pricing { padding: 4rem 1.5rem; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .contact { padding: 4rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 1rem; }
+  }
+  @media (max-width: 480px) { .masonry { columns: 1; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">LÉA DUMONT</a>
+  <ul class="nav-links">
+    <li><a href="#gallery">Portfolio</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">Photographe · Paris & Monde</div>
+    <h1>CAPTURER<br>L'INSTANT</h1>
+    <div class="hero-sub">
+      <p class="hero-desc">Photographe professionnelle spécialisée en portrait, mariage et reportage. Chaque image raconte une histoire unique.</p>
+      <div class="hero-cta">
+        <a href="#gallery" class="btn-yellow">Voir le portfolio</a>
+        <a href="#contact" class="btn-ghost">Me contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <h2>Portfolio</h2>
+    <div class="gallery-filter">
+      <button class="filter-btn active">Tout</button>
+      <button class="filter-btn">Portrait</button>
+      <button class="filter-btn">Mariage</button>
+      <button class="filter-btn">Reportage</button>
+    </div>
+  </div>
+  <div class="masonry">
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400" alt="Portrait"><div class="masonry-info"><div class="masonry-info-title">Portrait Urbain</div><div class="masonry-info-cat">Portrait</div></div></div>
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400" alt="Mariage"><div class="masonry-info"><div class="masonry-info-title">Mariage en Provence</div><div class="masonry-info-cat">Mariage</div></div></div>
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400" alt="Portrait"><div class="masonry-info"><div class="masonry-info-title">Studio Series</div><div class="masonry-info-cat">Portrait</div></div></div>
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400" alt="Mode"><div class="masonry-info"><div class="masonry-info-title">Editorial Mode</div><div class="masonry-info-cat">Reportage</div></div></div>
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=400" alt="Mariage"><div class="masonry-info"><div class="masonry-info-title">Cérémonie Bordeaux</div><div class="masonry-info-cat">Mariage</div></div></div>
+    <div class="masonry-item"><img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400" alt="Portrait"><div class="masonry-info"><div class="masonry-info-title">Lumière Naturelle</div><div class="masonry-info-cat">Portrait</div></div></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600" alt="Léa Dumont photographe">
+  </div>
+  <div class="about-content">
+    <div class="label">À propos</div>
+    <h2>La lumière comme <em>langage</em></h2>
+    <p>Photographe professionnelle depuis 10 ans, basée à Paris et disponible partout en France et à l'international.</p>
+    <p>Mon approche : discrétion, émotion et lumière naturelle. Je capture des instants authentiques sans mise en scène artificielle.</p>
+    <div class="about-skills">
+      <span class="skill-tag">Portrait</span>
+      <span class="skill-tag">Mariage</span>
+      <span class="skill-tag">Reportage</span>
+      <span class="skill-tag">Corporate</span>
+      <span class="skill-tag">Mode</span>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <h2>Formules & Tarifs</h2>
+    <p>Toutes les prestations incluent la retouche professionnelle et la galerie en ligne</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-cat">Séance</div>
+      <div class="price-name">Portrait Solo</div>
+      <div class="price-amount"><span>€</span>250</div>
+      <div class="price-note">2h de shooting · 30 photos retouchées</div>
+      <ul class="price-features">
+        <li>1 lieu de votre choix</li>
+        <li>2 tenues incluses</li>
+        <li>Galerie privée en ligne</li>
+        <li>Téléchargement HD</li>
+      </ul>
+      <a href="#contact" class="price-btn">Réserver</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-cat">Le plus populaire</div>
+      <div class="price-name">Mariage Complet</div>
+      <div class="price-amount"><span>€</span>1900</div>
+      <div class="price-note">Journée complète · 300+ photos</div>
+      <ul class="price-features">
+        <li>Couverture de 10h</li>
+        <li>2 photographes</li>
+        <li>Album photo inclus</li>
+        <li>Galerie privée partageable</li>
+        <li>Vidéo récap 2min</li>
+      </ul>
+      <a href="#contact" class="price-btn">Réserver</a>
+    </div>
+    <div class="price-card">
+      <div class="price-cat">Entreprise</div>
+      <div class="price-name">Corporate</div>
+      <div class="price-amount"><span>€</span>490</div>
+      <div class="price-note">Demi-journée · 50 photos livrées</div>
+      <ul class="price-features">
+        <li>Photos d'équipe</li>
+        <li>Portraits individuels</li>
+        <li>Format presse & web</li>
+        <li>Livraison 5 jours</li>
+      </ul>
+      <a href="#contact" class="price-btn">Réserver</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>TRAVAILLONS<br>ENSEMBLE</h2>
+  <p>Vous avez un projet en tête ? Décrivez-le moi et je vous répondrai dans les 24h pour discuter des détails.</p>
+  <a href="mailto:lea@leadumont.fr" class="contact-email">lea@leadumont.fr</a>
+</section>
+
+<footer>
+  <span>© 2024 Léa Dumont Photography</span>
+  <div class="social-links">
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Pinterest</a>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

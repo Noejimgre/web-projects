@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maître Leclerc & Associés — Cabinet d'Avocats</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #F8F6F1; --dark: #1C1A16; --olive: #4A4733; --gold: #9A8550; --border: #E2DDD4; --white: #FDFCFA; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--dark); font-family: 'EB Garamond', serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); padding: 0 4rem; display: flex; justify-content: space-between; align-items: stretch; height: 70px; }
+  .nav-left { display: flex; align-items: center; }
+  .logo { font-size: 1.1rem; font-weight: 500; color: var(--dark); text-decoration: none; letter-spacing: 0.05em; }
+  .logo span { color: var(--gold); }
+  .nav-center { display: flex; align-items: stretch; gap: 0; }
+  .nav-link { display: flex; align-items: center; padding: 0 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--olive); text-decoration: none; border-left: 1px solid var(--border); transition: all 0.3s; }
+  .nav-link:hover, .nav-link.active { background: var(--dark); color: var(--white); }
+  .nav-right { display: flex; align-items: center; }
+  .nav-tel { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--gold); text-decoration: none; }
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .burger span { width: 22px; height: 1px; background: var(--dark); display: block; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; margin-top: 70px; }
+  .hero-left { padding: 6rem 4rem; background: var(--dark); display: flex; flex-direction: column; justify-content: center; }
+  .hero-left .eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+  .hero-left .eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(154,133,80,0.3); }
+  .hero-left h1 { font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 400; line-height: 1.15; color: var(--white); margin-bottom: 2rem; }
+  .hero-left h1 em { font-style: italic; color: var(--gold); }
+  .hero-left p { font-size: 1.05rem; line-height: 1.9; color: rgba(253,252,250,0.55); margin-bottom: 3rem; font-weight: 400; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 1rem; background: var(--gold); color: var(--dark); padding: 1.1rem 2.5rem; text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.3s; width: fit-content; }
+  .hero-cta:hover { background: var(--white); }
+  .hero-cta span { font-size: 1.2rem; transition: transform 0.3s; }
+  .hero-cta:hover span { transform: translateX(5px); }
+  .hero-right { display: grid; grid-template-rows: 2fr 1fr; }
+  .hero-img { background: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800') center/cover; }
+  .hero-quote { background: var(--bg); padding: 3rem; display: flex; align-items: center; gap: 2rem; border-top: 1px solid var(--border); }
+  .hero-quote blockquote { font-size: 1.1rem; font-style: italic; color: var(--olive); line-height: 1.6; }
+  .hero-quote cite { display: block; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-top: 0.8rem; font-style: normal; }
+
+  /* EXPERTISE */
+  .expertise { padding: 7rem 4rem; }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+  .section-head h2 { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 400; line-height: 1.2; }
+  .section-head h2 em { font-style: italic; color: var(--gold); }
+  .section-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+  .expertise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+  .expertise-card { background: var(--white); padding: 2.5rem 2rem; transition: all 0.4s; position: relative; }
+  .expertise-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.4s; }
+  .expertise-card:hover::after { width: 100%; }
+  .expertise-card:hover { background: var(--dark); color: var(--white); }
+  .expertise-card:hover .exp-num { color: rgba(154,133,80,0.3); }
+  .expertise-card:hover .exp-desc { color: rgba(253,252,250,0.5); }
+  .exp-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(74,71,51,0.3); letter-spacing: 0.1em; margin-bottom: 1.5rem; display: block; transition: color 0.4s; }
+  .exp-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+  .expertise-card h3 { font-size: 1.3rem; font-weight: 500; margin-bottom: 1rem; }
+  .exp-desc { font-size: 0.9rem; line-height: 1.7; color: var(--olive); transition: color 0.4s; }
+
+  /* TEAM */
+  .team { padding: 7rem 4rem; background: var(--dark); }
+  .team-header { margin-bottom: 4rem; }
+  .team-header .eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .team-header h2 { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 400; color: var(--white); }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+  .team-card { background: var(--dark); padding: 3rem 2.5rem; transition: background 0.3s; }
+  .team-card:hover { background: #1A1816; }
+  .team-photo { width: 80px; height: 80px; border-radius: 50%; background: var(--olive); margin-bottom: 1.5rem; overflow: hidden; }
+  .team-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .team-name { font-size: 1.4rem; color: var(--white); margin-bottom: 0.3rem; }
+  .team-role { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .team-desc { font-size: 0.9rem; color: rgba(253,252,250,0.45); line-height: 1.7; }
+
+  /* CONTACT */
+  .contact { display: grid; grid-template-columns: 1fr 1fr; }
+  .contact-left { padding: 7rem 4rem; }
+  .contact-left .eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .contact-left h2 { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 400; margin-bottom: 1.5rem; }
+  .contact-left p { color: var(--olive); font-size: 1rem; line-height: 1.8; margin-bottom: 3rem; }
+  .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.3rem; }
+  .contact-item span { font-size: 1rem; color: var(--dark); }
+  .contact-right { background: var(--dark); padding: 7rem 4rem; }
+  .form-field { margin-bottom: 1.5rem; }
+  .form-field label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.6rem; }
+  .form-field input, .form-field select, .form-field textarea { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(154,133,80,0.2); color: var(--white); padding: 1rem; font-family: 'EB Garamond', serif; font-size: 1rem; outline: none; transition: border 0.3s; }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--gold); }
+  .form-field select option { background: var(--dark); }
+  .form-field textarea { height: 120px; resize: vertical; }
+  .form-submit { background: var(--gold); color: var(--dark); border: none; padding: 1.1rem 2.5rem; font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; width: 100%; margin-top: 0.5rem; }
+  .form-submit:hover { background: var(--white); }
+
+  /* FOOTER */
+  footer { background: #0D0B08; padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  footer .logo { color: var(--white); font-size: 1rem; }
+  footer p { color: rgba(253,252,250,0.2); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: rgba(253,252,250,0.3); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-center { display: none; }
+    .burger { display: flex; }
+    .hero { grid-template-columns: 1fr; margin-top: 70px; }
+    .hero-left { padding: 4rem 1.5rem; }
+    .hero-right { display: none; }
+    .expertise { padding: 4rem 1.5rem; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .team { padding: 4rem 1.5rem; }
+    .team-grid { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; }
+    .contact-left, .contact-right { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="#" class="logo">Leclerc <span>&</span> Associés</a>
+  </div>
+  <div class="nav-center">
+    <a href="#expertise" class="nav-link">Expertise</a>
+    <a href="#team" class="nav-link">L'équipe</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:+33140000000" class="nav-tel">+33 1 40 00 00 00</a>
+  </div>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Cabinet d'Avocats · Fondé en 1994</div>
+    <h1>Votre droit,<br>notre <em>engagement</em></h1>
+    <p>Expert en droit des affaires, droit social et contentieux commercial, notre cabinet vous accompagne avec rigueur et discrétion à chaque étape de vos démarches juridiques.</p>
+    <a href="#contact" class="hero-cta">Prendre rendez-vous <span>→</span></a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img"></div>
+    <div class="hero-quote">
+      <blockquote>
+        "Le droit est la souveraine règle de l'homme en société."
+        <cite>— Notre philosophie depuis 1994</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="expertise" id="expertise">
+  <div class="section-head">
+    <h2>Nos domaines<br>d'<em>expertise</em></h2>
+    <span class="section-meta">04 spécialités</span>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <span class="exp-num">01</span>
+      <span class="exp-icon">⚖️</span>
+      <h3>Droit des Affaires</h3>
+      <p class="exp-desc">Accompagnement juridique des entreprises : création, cession, contrats commerciaux et restructuration.</p>
+    </div>
+    <div class="expertise-card">
+      <span class="exp-num">02</span>
+      <span class="exp-icon">👥</span>
+      <h3>Droit Social</h3>
+      <p class="exp-desc">Conseil et contentieux en droit du travail pour employeurs et salariés. Licenciement, harcèlement, accords collectifs.</p>
+    </div>
+    <div class="expertise-card">
+      <span class="exp-num">03</span>
+      <span class="exp-icon">🏛️</span>
+      <h3>Contentieux Commercial</h3>
+      <p class="exp-desc">Représentation devant les juridictions commerciales et arbitrales, médiation et résolution amiable.</p>
+    </div>
+    <div class="expertise-card">
+      <span class="exp-num">04</span>
+      <span class="exp-icon">🔒</span>
+      <h3>Protection des Données</h3>
+      <p class="exp-desc">Conformité RGPD, politique de confidentialité, gestion des incidents de sécurité informatique.</p>
+    </div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="team-header">
+    <div class="eyebrow">Notre équipe</div>
+    <h2>Des avocats à votre écoute</h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200" alt="Maître Leclerc"></div>
+      <div class="team-name">Maître Jean Leclerc</div>
+      <div class="team-role">Associé Fondateur · Droit des Affaires</div>
+      <p class="team-desc">30 ans d'expérience en droit des sociétés et fusions-acquisitions. Ancien élève de l'ENS.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-photo"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200" alt="Maître Bernard"></div>
+      <div class="team-name">Maître Claire Bernard</div>
+      <div class="team-role">Associée · Droit Social</div>
+      <p class="team-desc">Spécialiste en relations collectives de travail et contentieux prud'homal, docteure en droit social.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" alt="Maître Martin"></div>
+      <div class="team-name">Maître Thomas Martin</div>
+      <div class="team-role">Associé · Droit Numérique & RGPD</div>
+      <p class="team-desc">Expert en protection des données et propriété intellectuelle. Certifié CIPP/E par l'IAPP.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="eyebrow">Nous contacter</div>
+    <h2>Prenez rendez-vous</h2>
+    <p>La première consultation est gratuite. Nous vous rappelons sous 24h pour fixer un rendez-vous à votre convenance.</p>
+    <div class="contact-details">
+      <div class="contact-item"><label>Adresse</label><span>12 Avenue de l'Opéra, 75001 Paris</span></div>
+      <div class="contact-item"><label>Téléphone</label><span>+33 1 40 00 00 00</span></div>
+      <div class="contact-item"><label>Email</label><span>contact@leclerc-avocats.fr</span></div>
+      <div class="contact-item"><label>Horaires</label><span>Lun – Ven · 9h – 19h</span></div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-field"><label>Nom & Prénom</label><input type="text" placeholder="Jean Dupont"></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="jean@email.com"></div>
+      <div class="form-field"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
+      <div class="form-field">
+        <label>Domaine juridique</label>
+        <select>
+          <option>Droit des affaires</option>
+          <option>Droit social</option>
+          <option>Contentieux commercial</option>
+          <option>Protection des données</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Votre situation (résumé)</label><textarea placeholder="Décrivez brièvement votre situation juridique..."></textarea></div>
+      <button type="submit" class="form-submit">Demander un rendez-vous →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="logo">Leclerc <span style="color:var(--gold)">&</span> Associés</span>
+  <p>© 2024 — Cabinet inscrit au Barreau de Paris</p>
+  <div class="footer-links">
+    <a href="#">Mentions légales</a>
+    <a href="#">RGPD</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  function handleSubmit(e) { e.preventDefault(); alert('Votre demande a été envoyée. Nous vous recontacterons sous 24h.'); }
+</script>
+</body>
+</html>
