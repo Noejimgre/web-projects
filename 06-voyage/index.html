@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomad Luxe — Voyages Sur Mesure</title>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Raleway:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--sand:#F0EAD8;--dark:#1B1712;--terra:#8B4A2A;--gold:#C9A84C;--mid:#7A7060;--white:#FDFCF8}
+html{scroll-behavior:smooth}
+body{background:var(--sand);color:var(--dark);font-family:'Raleway',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.8rem 4rem;transition:all 0.4s}
+nav.scrolled{background:rgba(253,252,248,0.96);backdrop-filter:blur(12px);box-shadow:0 1px 20px rgba(0,0,0,0.06)}
+.logo{font-family:'Tenor Sans',sans-serif;font-size:1.4rem;letter-spacing:0.2em;text-transform:uppercase;color:white;text-decoration:none;transition:color 0.4s}
+nav.scrolled .logo{color:var(--dark)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:400;transition:color 0.3s}
+nav.scrolled .nav-links a{color:var(--mid)}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{border:1px solid rgba(255,255,255,0.5);color:white;padding:0.6rem 1.5rem;text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;transition:all 0.3s}
+nav.scrolled .nav-btn{border-color:var(--dark);color:var(--dark)}
+.nav-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:24px;height:1px;background:white;display:block}
+.hero{height:100vh;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.slide.active{opacity:1}
+.slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 8s ease}
+.slide.active .slide-bg{transform:scale(1.05)}
+.slide-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(27,23,18,0.8) 0%,rgba(27,23,18,0.3) 60%,transparent 100%)}
+.slide:nth-child(1) .slide-bg{background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200')}
+.slide:nth-child(2) .slide-bg{background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200')}
+.slide:nth-child(3) .slide-bg{background-image:url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200')}
+.hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 4rem;z-index:2}
+.hero-tag{color:var(--gold);font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.hero-tag::before{content:'';width:40px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Tenor Sans',sans-serif;font-size:clamp(3rem,6vw,7rem);color:white;line-height:1.05;letter-spacing:0.02em;margin-bottom:1.5rem;max-width:700px}
+.hero-desc{color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.8;max-width:400px;margin-bottom:3rem;font-weight:300}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--dark);padding:1rem 2.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;transition:all 0.3s}
+.btn-gold:hover{background:white}
+.btn-ghost-w{border:1px solid rgba(255,255,255,0.5);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;transition:all 0.3s}
+.btn-ghost-w:hover{border-color:var(--gold);color:var(--gold)}
+.slide-dots{position:absolute;bottom:3rem;left:4rem;display:flex;gap:0.8rem;z-index:3}
+.dot{width:30px;height:2px;background:rgba(255,255,255,0.3);cursor:pointer;transition:all 0.3s}
+.dot.active{background:var(--gold);width:50px}
+.intro{padding:7rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.intro-left h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(2rem,3vw,3.5rem);line-height:1.2;margin-bottom:1.5rem}
+.intro-left h2 em{font-style:italic;color:var(--terra)}
+.intro-left p{color:var(--mid);font-size:0.95rem;line-height:1.9;font-weight:300;margin-bottom:1rem}
+.intro-right{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.intro-stat{text-align:center;padding:2rem;background:var(--white);border:1px solid rgba(201,168,76,0.2)}
+.intro-stat-num{font-family:'Tenor Sans',sans-serif;font-size:2.8rem;color:var(--terra);display:block}
+.intro-stat-label{font-size:0.75rem;color:var(--mid);letter-spacing:0.15em;text-transform:uppercase;margin-top:0.5rem;display:block}
+.destinations{padding:0 4rem 7rem}
+.dest-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem}
+.dest-header h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(2rem,3vw,3rem)}
+.dest-header a{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.dest-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 300px;gap:3px}
+.dest-item{position:relative;overflow:hidden}
+.dest-item:first-child{grid-row:1/3}
+.dest-img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s ease;display:block}
+.dest-item:hover .dest-img{transform:scale(1.06)}
+.dest-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(27,23,18,0.85) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;opacity:0.85;transition:opacity 0.4s}
+.dest-item:hover .dest-overlay{opacity:1}
+.dest-country{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem}
+.dest-name{font-family:'Tenor Sans',sans-serif;font-size:1.4rem;color:white}
+.dest-price{font-size:0.8rem;color:rgba(255,255,255,0.6);margin-top:0.3rem}
+.services{background:var(--dark);padding:7rem 4rem}
+.services-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+.services-top h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(2rem,3vw,3rem);color:white}
+.services-top p{color:rgba(240,234,216,0.45);font-size:0.9rem;max-width:300px;line-height:1.7;font-weight:300}
+.services-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.05)}
+.svc{background:var(--dark);padding:2.5rem 2rem;transition:background 0.4s}
+.svc:hover{background:#1F1A14}
+.svc-icon{font-size:2rem;margin-bottom:1.5rem;display:block}
+.svc h3{font-family:'Tenor Sans',sans-serif;font-size:1.1rem;color:white;margin-bottom:1rem}
+.svc p{font-size:0.85rem;color:rgba(240,234,216,0.4);line-height:1.7;font-weight:300}
+.cta-band{background:var(--terra);padding:5rem 4rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.cta-band h2{font-family:'Tenor Sans',sans-serif;font-size:clamp(2rem,3vw,3rem);color:white}
+.cta-band p{color:rgba(255,255,255,0.65);font-size:0.9rem;margin-top:0.5rem;font-weight:300}
+.btn-white{background:white;color:var(--terra);padding:1rem 2.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;transition:all 0.3s;flex-shrink:0}
+.btn-white:hover{background:var(--gold);color:var(--dark)}
+footer{background:var(--dark);padding:4rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem}
+.footer-brand p{color:rgba(240,234,216,0.3);font-size:0.85rem;line-height:1.7;font-weight:300;margin-top:1rem}
+.footer-logo-text{font-family:'Tenor Sans',sans-serif;font-size:1.3rem;letter-spacing:0.2em;color:white}
+.footer-col h4{color:var(--gold);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.footer-col ul li,.footer-col ul a{color:rgba(240,234,216,0.35);font-size:0.85rem;text-decoration:none;font-weight:300}
+.footer-bottom{background:#100E0A;padding:1.5rem 4rem;display:flex;justify-content:space-between;color:rgba(240,234,216,0.2);font-size:0.75rem}
+@media(max-width:1024px){.dest-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.dest-item:first-child{grid-row:auto;height:300px}.dest-item{height:220px}.services-row{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:1.5rem}.nav-links,.nav-btn{display:none}.burger{display:flex}.hero-content{padding:0 1.5rem}.intro{grid-template-columns:1fr;padding:4rem 1.5rem;gap:3rem}.destinations{padding:0 1.5rem 4rem}.dest-grid{grid-template-columns:1fr;grid-template-rows:auto}.dest-item,.dest-item:first-child{height:250px;grid-row:auto}.services{padding:4rem 1.5rem}.services-top{flex-direction:column;align-items:flex-start;gap:1rem}.services-row{grid-template-columns:1fr}.cta-band{padding:4rem 1.5rem;flex-direction:column}footer{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}.footer-bottom{padding:1.5rem;flex-direction:column;gap:0.5rem}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Nomad Luxe</a>
+  <ul class="nav-links"><li><a href="#destinations">Destinations</a></li><li><a href="#services">Services</a></li></ul>
+  <a href="#contact" class="nav-btn">Créer mon voyage</a>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+<section class="hero">
+  <div class="slide active"><div class="slide-bg"></div></div>
+  <div class="slide"><div class="slide-bg"></div></div>
+  <div class="slide"><div class="slide-bg"></div></div>
+  <div class="hero-content">
+    <div class="hero-tag">Voyages d'exception sur mesure</div>
+    <h1>L'aventure, à votre façon</h1>
+    <p class="hero-desc">Des itinéraires uniques conçus par des experts, des hôtels d'exception, un accompagnement 24h/24.</p>
+    <div class="hero-cta"><a href="#destinations" class="btn-gold">Découvrir nos voyages</a><a href="#contact" class="btn-ghost-w">Demande sur mesure</a></div>
+  </div>
+  <div class="slide-dots"><div class="dot active" onclick="goSlide(0)"></div><div class="dot" onclick="goSlide(1)"></div><div class="dot" onclick="goSlide(2)"></div></div>
+</section>
+<section class="intro">
+  <div class="intro-left">
+    <h2>Des voyages <em>pensés</em> pour vous</h2>
+    <p>Nomad Luxe crée depuis 2010 des voyages sur mesure pour des voyageurs exigeants qui refusent l'ordinaire.</p>
+    <p>Nos experts voyagent régulièrement sur place pour vous garantir des expériences authentiques et des adresses introuvables ailleurs.</p>
+  </div>
+  <div class="intro-right">
+    <div class="intro-stat"><span class="intro-stat-num">1200+</span><span class="intro-stat-label">Voyages créés</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">68</span><span class="intro-stat-label">Pays couverts</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">98%</span><span class="intro-stat-label">Clients satisfaits</span></div>
+    <div class="intro-stat"><span class="intro-stat-num">14</span><span class="intro-stat-label">Ans d'expertise</span></div>
+  </div>
+</section>
+<section class="destinations" id="destinations">
+  <div class="dest-header"><h2>Destinations phares</h2><a href="#">Toutes les destinations →</a></div>
+  <div class="dest-grid">
+    <div class="dest-item"><img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600" class="dest-img" alt="Japon"><div class="dest-overlay"><div class="dest-country">Asie</div><div class="dest-name">Japon</div><div class="dest-price">À partir de 4 200 € / pers.</div></div></div>
+    <div class="dest-item"><img src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=400" class="dest-img" alt="Maroc"><div class="dest-overlay"><div class="dest-country">Afrique</div><div class="dest-name">Maroc</div><div class="dest-price">À partir de 1 800 € / pers.</div></div></div>
+    <div class="dest-item"><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400" class="dest-img" alt="Islande"><div class="dest-overlay"><div class="dest-country">Europe</div><div class="dest-name">Islande</div><div class="dest-price">À partir de 2 600 € / pers.</div></div></div>
+    <div class="dest-item"><img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400" class="dest-img" alt="Italie"><div class="dest-overlay"><div class="dest-country">Europe</div><div class="dest-name">Italie</div><div class="dest-price">À partir de 1 500 € / pers.</div></div></div>
+    <div class="dest-item"><img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400" class="dest-img" alt="Pérou"><div class="dest-overlay"><div class="dest-country">Amérique du Sud</div><div class="dest-name">Pérou</div><div class="dest-price">À partir de 3 400 € / pers.</div></div></div>
+  </div>
+</section>
+<section class="services" id="services">
+  <div class="services-top"><h2>Comment nous créons votre voyage</h2><p>Un processus simple, un résultat inoubliable.</p></div>
+  <div class="services-row">
+    <div class="svc"><span class="svc-icon">🧭</span><h3>Briefing sur mesure</h3><p>Entretien approfondi pour comprendre vos envies, vos goûts et votre budget.</p></div>
+    <div class="svc"><span class="svc-icon">✍️</span><h3>Itinéraire unique</h3><p>Nos experts conçoivent un programme 100% personnalisé avec des adresses exclusives.</p></div>
+    <div class="svc"><span class="svc-icon">🏨</span><h3>Hôtels d'exception</h3><p>Sélection rigoureuse d'établissements uniques, des palaces aux lodges intimistes.</p></div>
+    <div class="svc"><span class="svc-icon">🛡️</span><h3>Assistance 24/7</h3><p>Un conseiller dédié joignable à toute heure pendant votre séjour.</p></div>
+  </div>
+</section>
+<div class="cta-band" id="contact"><div><h2>Votre prochain voyage commence ici</h2><p>Consultation gratuite · Devis sans engagement · Réponse sous 24h</p></div><a href="mailto:hello@nomadluxe.fr" class="btn-white">Créer mon voyage →</a></div>
+<footer>
+  <div class="footer-brand"><span class="footer-logo-text">Nomad Luxe</span><p>Agence de voyages sur mesure depuis 2010. Membre APST, partenaire IATA.</p></div>
+  <div class="footer-col"><h4>Destinations</h4><ul><li>Asie</li><li>Europe</li><li>Afrique</li><li>Amériques</li></ul></div>
+  <div class="footer-col"><h4>Contact</h4><ul><li>Paris · Lyon</li><li><a href="#">hello@nomadluxe.fr</a></li><li>+33 1 00 00 00 00</li></ul></div>
+</footer>
+<div class="footer-bottom"><span>© 2024 Nomad Luxe</span><span>Mentions légales · CGV</span></div>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>80)});
+  let cur=0;const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dot');
+  function goSlide(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');dots[cur].classList.add('active')}
+  setInterval(()=>goSlide((cur+1)%slides.length),5000);
+</script>
+</body>
+</html>

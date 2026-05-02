@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Vague — Salon de Coiffure</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFAF7;--dark:#18160F;--rose:#C4796A;--beige:#E8DDD0;--mid:#8A8070;--white:#FFF}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:'Outfit',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3.5rem;background:rgba(250,250,247,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,121,106,0.15)}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:var(--dark);text-decoration:none}
+.logo span{color:var(--rose)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--mid);font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--rose)}
+.nav-book{background:var(--rose);color:white;padding:0.7rem 1.8rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;transition:all 0.3s}
+.nav-book:hover{background:var(--dark)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:22px;height:1.5px;background:var(--dark);display:block}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;margin-top:70px}
+.hero-left{background:var(--dark);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center}
+.hero-label{font-size:0.72rem;color:var(--rose);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5.5rem);color:white;line-height:1.1;margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:var(--rose);display:block}
+.hero-desc{color:rgba(255,255,255,0.5);font-size:0.95rem;line-height:1.8;font-weight:300;margin-bottom:3rem;max-width:380px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-rose{background:var(--rose);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;transition:all 0.3s}
+.btn-rose:hover{background:white;color:var(--rose)}
+.btn-outline-w{border:1px solid rgba(255,255,255,0.3);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.3s}
+.btn-outline-w:hover{border-color:var(--rose);color:var(--rose)}
+.hero-hours{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:3rem}
+.hour-item .day{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.3rem}
+.hour-item .time{font-size:0.9rem;color:white;font-weight:300}
+.hero-right{display:grid;grid-template-rows:3fr 2fr}
+.hero-img-main{overflow:hidden}
+.hero-img-main img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;display:block}
+.hero-right:hover .hero-img-main img{transform:scale(1.04)}
+.hero-img-bottom{display:grid;grid-template-columns:1fr 1fr}
+.hero-img-sm{overflow:hidden}
+.hero-img-sm img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s}
+.hero-img-sm:hover img{transform:scale(1.06)}
+
+/* SERVICES */
+.services{padding:6rem 3.5rem;display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:start}
+.services-left h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3vw,3rem);line-height:1.2;margin-bottom:1rem}
+.services-left h2 em{font-style:italic;color:var(--rose)}
+.services-left p{color:var(--mid);font-size:0.9rem;line-height:1.8;font-weight:300;margin-bottom:2rem}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--beige)}
+.svc-card{background:var(--bg);padding:2.5rem 2rem;transition:background 0.4s;cursor:default}
+.svc-card:hover{background:var(--dark)}
+.svc-card:hover h3,.svc-card:hover .svc-price{color:white}
+.svc-card:hover p{color:rgba(255,255,255,0.45)}
+.svc-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
+.svc-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.5rem;transition:color 0.4s}
+.svc-card p{font-size:0.82rem;color:var(--mid);line-height:1.6;font-weight:300;margin-bottom:1rem;transition:color 0.4s}
+.svc-price{font-size:0.9rem;color:var(--rose);font-weight:500;transition:color 0.4s}
+
+/* TEAM */
+.team{background:var(--dark);padding:6rem 3.5rem}
+.team-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+.team-header h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3vw,3rem);color:white}
+.team-header h2 em{font-style:italic;color:var(--rose)}
+.team-header a{color:rgba(255,255,255,0.4);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:color 0.3s}
+.team-header a:hover{color:var(--rose)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.stylist-card{cursor:pointer}
+.stylist-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;filter:saturate(0.7);transition:filter 0.4s}
+.stylist-card:hover .stylist-img{filter:saturate(1)}
+.stylist-info{padding:1.5rem 0}
+.stylist-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:white;margin-bottom:0.3rem}
+.stylist-role{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rose)}
+.stylist-spec{font-size:0.82rem;color:rgba(255,255,255,0.35);margin-top:0.5rem;font-weight:300}
+
+/* BOOKING */
+.booking{padding:6rem 3.5rem;background:var(--beige)}
+.booking-inner{max-width:700px;margin:0 auto;text-align:center}
+.booking-inner h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3vw,3rem);line-height:1.2;margin-bottom:0.5rem}
+.booking-inner h2 em{font-style:italic;color:var(--rose)}
+.booking-inner p{color:var(--mid);margin-bottom:3rem;font-weight:300;line-height:1.7}
+.book-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:left}
+.bf-group{display:flex;flex-direction:column;gap:0.4rem}
+.bf-group label{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rose)}
+.bf-group input,.bf-group select{background:white;border:1px solid rgba(196,121,106,0.25);padding:0.9rem 1rem;font-family:'Outfit',sans-serif;font-size:0.9rem;outline:none;transition:border 0.3s;color:var(--dark)}
+.bf-group input:focus,.bf-group select:focus{border-color:var(--rose)}
+.book-submit{grid-column:1/-1;background:var(--dark);color:white;border:none;padding:1.1rem;font-family:'Outfit',sans-serif;font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:background 0.3s;margin-top:0.5rem}
+.book-submit:hover{background:var(--rose)}
+.book-alt{grid-column:1/-1;text-align:center;font-size:0.82rem;color:var(--mid)}
+.book-alt a{color:var(--rose);text-decoration:none}
+
+footer{background:#0E0C07;padding:3rem 3.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:white}
+.f-logo span{color:var(--rose)}
+footer p{color:rgba(255,255,255,0.2);font-size:0.8rem}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{color:rgba(255,255,255,0.3);font-size:0.75rem;text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.3s}
+.f-links a:hover{color:var(--rose)}
+
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}.nav-links,.nav-book{display:none}.burger{display:flex}.hero{grid-template-columns:1fr;margin-top:60px}.hero-left{padding:3rem 1.5rem}.hero-right{height:60vw}.hero-img-bottom{display:none}.services{grid-template-columns:1fr;padding:4rem 1.5rem;gap:2.5rem}.services-grid{grid-template-columns:1fr}.team{padding:4rem 1.5rem}.team-header{flex-direction:column;align-items:flex-start;gap:1rem}.team-grid{grid-template-columns:1fr 1fr}.booking{padding:4rem 1.5rem}.book-form{grid-template-columns:1fr}footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}}
+@media(max-width:480px){.team-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Studio <span>Vague</span></a>
+  <ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#team">L'équipe</a></li><li><a href="#booking">Tarifs</a></li></ul>
+  <a href="#booking" class="nav-book">Réserver</a>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Salon de coiffure · Lyon Centre</div>
+    <h1>L'art de la <em>coiffure</em></h1>
+    <p class="hero-desc">Un salon intimiste où chaque coupe est une création unique. Venez pour un soin, repartez transformé(e).</p>
+    <div class="hero-btns"><a href="#booking" class="btn-rose">Prendre rendez-vous</a><a href="#services" class="btn-outline-w">Nos services</a></div>
+    <div class="hero-hours">
+      <div class="hour-item"><div class="day">Mar – Sam</div><div class="time">9h – 19h30</div></div>
+      <div class="hour-item"><div class="day">Dimanche</div><div class="time">10h – 17h</div></div>
+      <div class="hour-item"><div class="day">Lundi</div><div class="time">Fermé</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-main"><img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600" alt="Studio Vague"></div>
+    <div class="hero-img-bottom">
+      <div class="hero-img-sm"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" alt="Coiffure"></div>
+      <div class="hero-img-sm"><img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=300" alt="Soin"></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-left">
+    <h2>Nos <em>savoir-faire</em></h2>
+    <p>Du soin capillaire à la coupe tendance, nos stylistes mettent leur expertise au service de votre beauté.</p>
+    <a href="#booking" class="btn-rose">Réserver un soin</a>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card"><span class="svc-icon">✂️</span><h3>Coupe & Coiffage</h3><p>Coupe femme, homme, enfant. Brushing, coiffage occasion.</p><span class="svc-price">À partir de 35 €</span></div>
+    <div class="svc-card"><span class="svc-icon">🎨</span><h3>Couleur & Balayage</h3><p>Coloration, balayage, mèches, tie-and-dye, correction de couleur.</p><span class="svc-price">À partir de 60 €</span></div>
+    <div class="svc-card"><span class="svc-icon">💆</span><h3>Soins Capillaires</h3><p>Soins kératine, masques reconstructeurs, traitement anti-chute.</p><span class="svc-price">À partir de 40 €</span></div>
+    <div class="svc-card"><span class="svc-icon">💍</span><h3>Mariée & Événements</h3><p>Mise en beauté pour mariages, soirées et occasions spéciales.</p><span class="svc-price">À partir de 120 €</span></div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="team-header"><h2>Notre <em>équipe</em></h2><a href="#">Voir tous les profils →</a></div>
+  <div class="team-grid">
+    <div class="stylist-card"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400" class="stylist-img" alt="Sophie"><div class="stylist-info"><div class="stylist-name">Sophie L.</div><div class="stylist-role">Directrice artistique</div><div class="stylist-spec">Couleur & Balayage · 15 ans d'expérience</div></div></div>
+    <div class="stylist-card"><img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400" class="stylist-img" alt="Marc"><div class="stylist-info"><div class="stylist-name">Marc D.</div><div class="stylist-role">Styliste Senior</div><div class="stylist-spec">Coupe homme & tendances · 10 ans</div></div></div>
+    <div class="stylist-card"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400" class="stylist-img" alt="Camille"><div class="stylist-info"><div class="stylist-name">Camille R.</div><div class="stylist-role">Experte Mariées</div><div class="stylist-spec">Chignons & mise en beauté · 8 ans</div></div></div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <h2>Réservez votre <em>rendez-vous</em></h2>
+    <p>En ligne 24h/24 ou par téléphone au <strong>04 00 00 00 00</strong>. Annulation gratuite jusqu'à 24h avant.</p>
+    <form class="book-form" onsubmit="e=>e.preventDefault()">
+      <div class="bf-group"><label>Prénom & Nom</label><input type="text" placeholder="Sophie Martin"></div>
+      <div class="bf-group"><label>Téléphone</label><input type="tel" placeholder="06 00 00 00 00"></div>
+      <div class="bf-group"><label>Service souhaité</label><select><option>Coupe femme</option><option>Coupe homme</option><option>Couleur</option><option>Balayage</option><option>Soin</option><option>Mariée</option></select></div>
+      <div class="bf-group"><label>Styliste préféré(e)</label><select><option>Pas de préférence</option><option>Sophie L.</option><option>Marc D.</option><option>Camille R.</option></select></div>
+      <div class="bf-group"><label>Date souhaitée</label><input type="date"></div>
+      <div class="bf-group"><label>Heure souhaitée</label><select><option>9h00</option><option>10h00</option><option>11h00</option><option>14h00</option><option>15h00</option><option>16h00</option><option>17h00</option></select></div>
+      <button type="submit" class="book-submit" onclick="return false">Confirmer le rendez-vous</button>
+      <div class="book-alt">Ou appelez-nous : <a href="tel:+33400000000">04 00 00 00 00</a></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo">Studio <span>Vague</span></span>
+  <p>© 2024 — 14 Rue de la République, Lyon 1er</p>
+  <div class="f-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Mentions légales</a></div>
+</footer>
+</body>
+</html>

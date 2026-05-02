@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloé Fleurs — Fleuriste Artisanale</title>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAF7F2;--dark:#2C2416;--green:#3D5A3E;--blush:#E8C4B4;--sage:#8FA68E;--mid:#7A6E62;--white:#FFFEFB}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:'Lato',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(250,247,242,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(61,90,62,0.1);padding:1.3rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Italiana',serif;font-size:1.8rem;color:var(--green);text-decoration:none;letter-spacing:0.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--mid);text-decoration:none;font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--green)}
+.nav-order{background:var(--green);color:white;padding:0.7rem 1.8rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.3s}
+.nav-order:hover{background:var(--dark)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:22px;height:1.5px;background:var(--dark);display:block}
+
+/* HERO SPLIT */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;margin-top:65px}
+.hero-img-col{position:relative;overflow:hidden;background:var(--sage)}
+.hero-img-col img{width:100%;height:100%;object-fit:cover;display:block;mix-blend-mode:multiply;opacity:0.85;transition:transform 10s ease}
+.hero-img-col:hover img{transform:scale(1.04)}
+.hero-img-badge{position:absolute;bottom:3rem;left:3rem;background:var(--white);padding:1.5rem;max-width:200px}
+.hero-img-badge .badge-num{font-family:'Italiana',serif;font-size:2.5rem;color:var(--green);display:block;line-height:1}
+.hero-img-badge .badge-text{font-size:0.72rem;color:var(--mid);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.3rem;display:block}
+.hero-content{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;background:var(--white)}
+.hero-tag{font-size:0.72rem;color:var(--sage);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
+.hero-tag::before{content:'✦';font-size:0.6rem}
+.hero h1{font-family:'Italiana',serif;font-size:clamp(3rem,5vw,5.5rem);color:var(--dark);line-height:1.05;margin-bottom:1.5rem;letter-spacing:0.02em}
+.hero h1 em{color:var(--green);font-style:normal}
+.hero-desc{color:var(--mid);font-size:0.95rem;line-height:1.9;font-weight:300;font-style:italic;margin-bottom:3rem;border-left:2px solid var(--blush);padding-left:1.5rem;max-width:400px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-green{background:var(--green);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;transition:all 0.3s}
+.btn-green:hover{background:var(--dark)}
+.btn-outline-g{border:1px solid var(--green);color:var(--green);padding:1rem 2.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;transition:all 0.3s}
+.btn-outline-g:hover{background:var(--green);color:white}
+.hero-delivery{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(61,90,62,0.15);display:flex;gap:2.5rem}
+.delivery-item{display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--mid)}
+.delivery-item .icon{font-size:1.1rem}
+
+/* COLLECTIONS */
+.collections{padding:6rem 4rem}
+.coll-header{text-align:center;margin-bottom:4rem}
+.coll-header .tag{font-size:0.72rem;color:var(--sage);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.8rem}
+.coll-header h2{font-family:'Italiana',serif;font-size:clamp(2.5rem,4vw,4rem);color:var(--dark)}
+.coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.coll-item{cursor:pointer}
+.coll-img{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--blush)}
+.coll-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s ease,filter 0.4s;filter:saturate(0.9)}
+.coll-item:hover .coll-img img{transform:scale(1.08);filter:saturate(1)}
+.coll-overlay{position:absolute;inset:0;background:rgba(44,36,22,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s}
+.coll-item:hover .coll-overlay{opacity:1}
+.coll-btn{border:1px solid white;color:white;padding:0.7rem 1.5rem;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none}
+.coll-info{padding:1.2rem 0}
+.coll-name{font-family:'Italiana',serif;font-size:1.3rem;color:var(--dark);margin-bottom:0.2rem}
+.coll-price{font-size:0.85rem;color:var(--sage);font-weight:300}
+
+/* PROCESS */
+.process{background:var(--green);padding:6rem 4rem}
+.process-header{text-align:center;margin-bottom:4rem}
+.process-header h2{font-family:'Italiana',serif;font-size:clamp(2.5rem,4vw,4rem);color:white}
+.process-header p{color:rgba(255,255,255,0.55);margin-top:0.5rem;font-size:0.95rem;font-weight:300;font-style:italic}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.1)}
+.step{background:var(--green);padding:3rem 2rem;text-align:center;transition:background 0.4s}
+.step:hover{background:rgba(0,0,0,0.1)}
+.step-num{font-family:'Italiana',serif;font-size:4rem;color:rgba(255,255,255,0.15);display:block;line-height:1;margin-bottom:1rem}
+.step-icon{font-size:1.8rem;display:block;margin-bottom:1rem}
+.step h3{font-family:'Italiana',serif;font-size:1.4rem;color:white;margin-bottom:0.8rem}
+.step p{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300;font-style:italic}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr}
+.about-img{overflow:hidden;min-height:500px}
+.about-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s}
+.about-img:hover img{transform:scale(1.04)}
+.about-content{padding:6rem 4rem;background:var(--dark);display:flex;flex-direction:column;justify-content:center}
+.about-content .tag{font-size:0.72rem;color:var(--sage);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:1.5rem}
+.about-content h2{font-family:'Italiana',serif;font-size:clamp(2rem,3vw,3rem);color:white;margin-bottom:1.5rem}
+.about-content p{color:rgba(255,255,255,0.45);font-size:0.9rem;line-height:1.9;font-weight:300;font-style:italic;margin-bottom:1rem}
+.signature{font-family:'Italiana',serif;font-size:2rem;color:var(--blush);margin-top:2rem}
+
+/* CONTACT */
+.contact{padding:6rem 4rem;background:var(--blush);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.contact-left h2{font-family:'Italiana',serif;font-size:clamp(2rem,3vw,3.5rem);color:var(--dark);margin-bottom:1rem}
+.contact-left p{color:var(--mid);font-size:0.9rem;line-height:1.8;font-weight:300;font-style:italic;margin-bottom:2rem}
+.contact-info{display:flex;flex-direction:column;gap:1rem}
+.c-item{display:flex;gap:1rem;align-items:flex-start}
+.c-icon{font-size:1.1rem;margin-top:0.1rem}
+.c-text{font-size:0.88rem;color:var(--dark)}
+.c-text strong{display:block;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-bottom:0.2rem}
+.contact-right{background:var(--white);padding:2.5rem}
+.cf-group{margin-bottom:1.2rem}
+.cf-group label{display:block;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:0.5rem}
+.cf-group input,.cf-group select,.cf-group textarea{width:100%;border:1px solid rgba(61,90,62,0.2);padding:0.9rem;font-family:'Lato',sans-serif;font-size:0.88rem;color:var(--dark);background:var(--bg);outline:none;transition:border 0.3s}
+.cf-group input:focus,.cf-group select:focus,.cf-group textarea:focus{border-color:var(--green)}
+.cf-group textarea{height:100px;resize:vertical}
+.cf-submit{width:100%;background:var(--green);color:white;border:none;padding:1rem;font-family:'Lato',sans-serif;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:background 0.3s;margin-top:0.5rem}
+.cf-submit:hover{background:var(--dark)}
+
+footer{background:var(--dark);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.f-logo{font-family:'Italiana',serif;font-size:1.6rem;color:white}
+footer p{color:rgba(255,255,255,0.2);font-size:0.8rem}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+.f-links a:hover{color:var(--sage)}
+
+@media(max-width:1024px){.coll-grid{grid-template-columns:1fr 1fr}.process-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}.nav-links,.nav-order{display:none}.burger{display:flex}.hero{grid-template-columns:1fr;margin-top:60px}.hero-img-col{height:60vw}.hero-content{padding:3rem 1.5rem}.collections{padding:4rem 1.5rem}.coll-grid{grid-template-columns:1fr 1fr}.process{padding:4rem 1.5rem}.process-steps{grid-template-columns:1fr}.about{grid-template-columns:1fr}.about-img{min-height:300px}.about-content{padding:3rem 1.5rem}.contact{grid-template-columns:1fr;padding:4rem 1.5rem;gap:2rem}footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Cloé Fleurs</a>
+  <ul class="nav-links"><li><a href="#collections">Collections</a></li><li><a href="#about">Notre histoire</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a href="#contact" class="nav-order">Commander</a>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-img-col">
+    <img src="https://images.unsplash.com/photo-1487530811015-780f52f96571?w=600" alt="Fleurs">
+    <div class="hero-img-badge"><span class="badge-num">12+</span><span class="badge-text">Ans de passion</span></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Fleuriste artisanale · Bordeaux</div>
+    <h1>Des fleurs, <em>du cœur</em></h1>
+    <p class="hero-desc">Chaque bouquet est une poésie vivante. Compositions fraîches, sauvages et sincères pour toutes vos occasions.</p>
+    <div class="hero-btns"><a href="#collections" class="btn-green">Voir nos créations</a><a href="#contact" class="btn-outline-g">Commander sur mesure</a></div>
+    <div class="hero-delivery">
+      <div class="delivery-item"><span class="icon">🌿</span>Fleurs fraîches chaque matin</div>
+      <div class="delivery-item"><span class="icon">🚲</span>Livraison vélo Bordeaux</div>
+    </div>
+  </div>
+</section>
+
+<section class="collections" id="collections">
+  <div class="coll-header"><div class="tag">Nos créations</div><h2>Bouquets de saison</h2></div>
+  <div class="coll-grid">
+    <div class="coll-item"><div class="coll-img"><img src="https://images.unsplash.com/photo-1490750967868-88df5691cc5e?w=400" alt="Bouquet romantique"><div class="coll-overlay"><a href="#contact" class="coll-btn">Commander</a></div></div><div class="coll-info"><div class="coll-name">Rosa Romantica</div><div class="coll-price">À partir de 35 €</div></div></div>
+    <div class="coll-item"><div class="coll-img"><img src="https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=400" alt="Bouquet sauvage"><div class="coll-overlay"><a href="#contact" class="coll-btn">Commander</a></div></div><div class="coll-info"><div class="coll-name">Prairie Libre</div><div class="coll-price">À partir de 28 €</div></div></div>
+    <div class="coll-item"><div class="coll-img"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400" alt="Bouquet mariage"><div class="coll-overlay"><a href="#contact" class="coll-btn">Commander</a></div></div><div class="coll-info"><div class="coll-name">Bouquet Mariée</div><div class="coll-price">À partir de 120 €</div></div></div>
+    <div class="coll-item"><div class="coll-img"><img src="https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=400" alt="Composition"><div class="coll-overlay"><a href="#contact" class="coll-btn">Commander</a></div></div><div class="coll-info"><div class="coll-name">Composition Vase</div><div class="coll-price">À partir de 55 €</div></div></div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="process-header"><h2>Comment ça marche ?</h2><p>Une commande simple pour un résultat inoubliable</p></div>
+  <div class="process-steps">
+    <div class="step"><span class="step-num">01</span><span class="step-icon">💬</span><h3>Vous nous parlez</h3><p>Décrivez l'occasion, vos couleurs préférées, votre budget. On écoute tout.</p></div>
+    <div class="step"><span class="step-num">02</span><span class="step-icon">✨</span><h3>On crée pour vous</h3><p>Cloé compose votre bouquet le matin même avec les fleurs les plus fraîches.</p></div>
+    <div class="step"><span class="step-num">03</span><span class="step-icon">🚲</span><h3>On livre avec soin</h3><p>Livraison à vélo dans Bordeaux, emballé avec amour et un petit mot manuscrit.</p></div>
+    <div class="step"><span class="step-num">04</span><span class="step-icon">😊</span><h3>Vous êtes touché(e)</h3><p>La personne qui reçoit vos fleurs ne l'oubliera jamais. C'est notre promesse.</p></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-img"><img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=600" alt="Cloé fleuriste"></div>
+  <div class="about-content">
+    <div class="tag">Notre histoire</div>
+    <h2>Cloé, fleuriste par vocation</h2>
+    <p>J'ai ouvert ce salon en 2012 après des années à voyager et à m'inspirer des jardins du monde entier. Mes compositions mêlent fleurs sauvages et variétés rares, toujours avec une esthétique naturelle et organique.</p>
+    <p>Chaque fleur est sourcée chez des producteurs locaux et équitables. Parce que la beauté ne devrait jamais se faire au détriment de la terre.</p>
+    <div class="signature">Cloé</div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <h2>Passez commande</h2>
+    <p>Pour un bouquet du quotidien ou une composition florale pour un grand moment, je suis là pour vous.</p>
+    <div class="contact-info">
+      <div class="c-item"><span class="c-icon">📍</span><div class="c-text"><strong>Boutique</strong>8 Rue du Marché, Bordeaux</div></div>
+      <div class="c-item"><span class="c-icon">📞</span><div class="c-text"><strong>Téléphone</strong>05 00 00 00 00</div></div>
+      <div class="c-item"><span class="c-icon">🕐</span><div class="c-text"><strong>Horaires</strong>Mar – Sam : 8h30 – 19h · Dim : 9h – 13h</div></div>
+      <div class="c-item"><span class="c-icon">🚲</span><div class="c-text"><strong>Livraison</strong>Bordeaux intra-muros · 7€ · Gratuit dès 60€</div></div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="cf-group"><label>Votre prénom</label><input type="text" placeholder="Sophie"></div>
+    <div class="cf-group"><label>Email ou téléphone</label><input type="text" placeholder="sophie@email.com"></div>
+    <div class="cf-group"><label>Occasion</label><select><option>Anniversaire</option><option>Mariage</option><option>Deuil</option><option>Naissance</option><option>Autre</option></select></div>
+    <div class="cf-group"><label>Message & souhaits</label><textarea placeholder="Dites-moi tout : couleurs, style, budget, date de livraison..."></textarea></div>
+    <button class="cf-submit">Envoyer ma commande 🌸</button>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo">Cloé Fleurs</span>
+  <p>© 2024 — Bordeaux · Fleurs fraîches, cœur sincère</p>
+  <div class="f-links"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">Mentions légales</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zénith Studio — Yoga & Bien-être</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,500;1,300;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F4F1EC;--dark:#1A1814;--terracotta:#C4673A;--warm:#E8D5C0;--sage:#7D9B8A;--mid:#8A7E72;--white:#FDFCFA}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s}
+nav.solid{background:rgba(244,241,236,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,103,58,0.1)}
+.logo{font-family:'Cormorant',serif;font-size:1.5rem;font-style:italic;color:white;text-decoration:none;transition:color 0.4s}
+nav.solid .logo{color:var(--dark)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+nav.solid .nav-links a{color:var(--mid)}
+.nav-links a:hover{color:var(--terracotta)}
+.nav-cta{border:1px solid rgba(255,255,255,0.5);color:white;padding:0.6rem 1.5rem;text-decoration:none;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.3s}
+nav.solid .nav-cta{border-color:var(--terracotta);color:var(--terracotta)}
+.nav-cta:hover{background:var(--terracotta);border-color:var(--terracotta);color:white}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:22px;height:1.5px;background:white;display:block;transition:background 0.4s}
+nav.solid .burger span{background:var(--dark)}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200') center/cover}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,24,20,0.85) 0%,rgba(26,24,20,0.5) 60%,rgba(125,155,138,0.3) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 4rem;max-width:700px}
+.hero-eyebrow{font-size:0.72rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--terracotta);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.hero-eyebrow::after{content:'';flex:1;max-width:50px;height:1px;background:var(--terracotta)}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(3rem,6vw,6.5rem);color:white;line-height:1.05;font-style:italic;font-weight:300;margin-bottom:1.5rem}
+.hero h1 strong{font-style:normal;font-weight:500;color:rgba(255,255,255,0.9)}
+.hero-desc{color:rgba(255,255,255,0.6);font-size:0.95rem;line-height:1.8;max-width:420px;margin-bottom:3rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-terra{background:var(--terracotta);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;transition:all 0.3s}
+.btn-terra:hover{background:white;color:var(--terracotta)}
+.btn-ghost-terra{border:1px solid rgba(255,255,255,0.4);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.3s}
+.btn-ghost-terra:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.hero-scroll{position:absolute;bottom:2.5rem;right:4rem;color:rgba(255,255,255,0.4);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;writing-mode:vertical-rl}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);background:var(--dark)}
+.pillar{padding:4rem 3rem;border-right:1px solid rgba(255,255,255,0.05);transition:background 0.4s}
+.pillar:last-child{border-right:none}
+.pillar:hover{background:rgba(255,255,255,0.03)}
+.pillar-num{font-family:'Cormorant',serif;font-size:4rem;color:rgba(196,103,58,0.2);font-style:italic;line-height:1;margin-bottom:1rem;display:block}
+.pillar h3{font-family:'Cormorant',serif;font-size:1.5rem;color:white;font-style:italic;margin-bottom:1rem;font-weight:300}
+.pillar p{color:rgba(255,255,255,0.35);font-size:0.85rem;line-height:1.8;font-weight:300}
+
+/* CLASSES */
+.classes{padding:6rem 4rem}
+.classes-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+.classes-header h2{font-family:'Cormorant',serif;font-size:clamp(2rem,3vw,3.5rem);font-style:italic;font-weight:300}
+.classes-header h2 span{color:var(--terracotta);font-weight:500}
+.classes-header a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--terracotta);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.classes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.class-card{background:var(--white);overflow:hidden;border:1px solid rgba(196,103,58,0.1);transition:transform 0.3s,box-shadow 0.3s}
+.class-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
+.class-img{height:200px;overflow:hidden;position:relative}
+.class-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s;display:block}
+.class-card:hover .class-img img{transform:scale(1.06)}
+.class-level{position:absolute;top:1rem;right:1rem;background:var(--terracotta);color:white;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.7rem}
+.class-body{padding:1.8rem}
+.class-name{font-family:'Cormorant',serif;font-size:1.3rem;font-style:italic;margin-bottom:0.5rem}
+.class-desc{font-size:0.82rem;color:var(--mid);line-height:1.6;font-weight:300;margin-bottom:1.2rem}
+.class-meta{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid rgba(196,103,58,0.1)}
+.class-info{font-size:0.78rem;color:var(--mid)}
+.class-info strong{color:var(--terracotta)}
+.class-book{background:var(--terracotta);color:white;padding:0.5rem 1.2rem;text-decoration:none;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;transition:background 0.3s}
+.class-book:hover{background:var(--dark)}
+
+/* SCHEDULE */
+.schedule{background:var(--warm);padding:6rem 4rem}
+.schedule-header{text-align:center;margin-bottom:3rem}
+.schedule-header h2{font-family:'Cormorant',serif;font-size:clamp(2rem,3vw,3.5rem);font-style:italic;font-weight:300}
+.schedule-header p{color:var(--mid);margin-top:0.5rem;font-size:0.9rem;font-weight:300}
+.schedule-table{width:100%;border-collapse:collapse;background:var(--white)}
+.schedule-table th{background:var(--dark);color:white;padding:1rem;font-family:'Cormorant',serif;font-size:0.95rem;font-style:italic;font-weight:300;letter-spacing:0.05em;text-align:left}
+.schedule-table td{padding:0.9rem 1rem;border-bottom:1px solid rgba(196,103,58,0.1);font-size:0.85rem}
+.schedule-table tr:hover td{background:rgba(196,103,58,0.04)}
+.tag-class{background:var(--terracotta);color:white;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:0}
+.tag-class.yoga{background:var(--sage)}
+.tag-class.med{background:var(--mid)}
+
+/* MEMBERSHIP */
+.membership{padding:6rem 4rem;background:var(--dark)}
+.mem-header{text-align:center;margin-bottom:4rem}
+.mem-header h2{font-family:'Cormorant',serif;font-size:clamp(2rem,3vw,3.5rem);color:white;font-style:italic;font-weight:300}
+.mem-header p{color:rgba(255,255,255,0.35);margin-top:0.5rem;font-size:0.9rem;font-weight:300}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.05)}
+.plan{background:var(--dark);padding:3rem 2.5rem;transition:background 0.3s}
+.plan.featured{background:var(--terracotta)}
+.plan:not(.featured):hover{background:#1F1C17}
+.plan-icon{font-size:2rem;margin-bottom:1.5rem;display:block}
+.plan-name{font-family:'Cormorant',serif;font-size:1.5rem;font-style:italic;color:white;margin-bottom:0.3rem;font-weight:300}
+.plan-price{font-family:'Cormorant',serif;font-size:3rem;color:white;font-weight:500;margin:1.2rem 0 0.3rem}
+.plan-price sup{font-size:1.2rem}
+.plan-period{font-size:0.78rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2rem}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:0.8rem;margin-bottom:2.5rem}
+.plan-features li{font-size:0.85rem;color:rgba(255,255,255,0.6);display:flex;gap:0.8rem;font-weight:300}
+.plan-features li::before{content:'—';color:var(--terracotta);flex-shrink:0}
+.plan.featured .plan-features li::before{color:rgba(255,255,255,0.6)}
+.plan-btn{display:block;text-align:center;padding:1rem;border:1px solid rgba(255,255,255,0.25);text-decoration:none;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:white;transition:all 0.3s}
+.plan.featured .plan-btn{border-color:white;background:white;color:var(--terracotta)}
+.plan:not(.featured) .plan-btn:hover{background:var(--terracotta);border-color:var(--terracotta)}
+
+/* CTA */
+.cta{padding:8rem 4rem;background:url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1200') center/cover;position:relative;text-align:center}
+.cta::before{content:'';position:absolute;inset:0;background:rgba(26,24,20,0.78)}
+.cta-inner{position:relative;z-index:2}
+.cta h2{font-family:'Cormorant',serif;font-size:clamp(2.5rem,5vw,5rem);color:white;font-style:italic;font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+.cta h2 em{font-weight:500;color:var(--terracotta);font-style:normal}
+.cta p{color:rgba(255,255,255,0.5);max-width:400px;margin:0 auto 3rem;font-size:0.9rem;line-height:1.8;font-weight:300}
+
+footer{background:#0D0C09;padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;border-top:1px solid rgba(255,255,255,0.04)}
+.f-logo-text{font-family:'Cormorant',serif;font-size:1.4rem;font-style:italic;color:white;font-weight:300}
+footer p{color:rgba(255,255,255,0.2);font-size:0.78rem}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{color:rgba(255,255,255,0.25);font-size:0.72rem;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+.f-links a:hover{color:var(--terracotta)}
+
+@media(max-width:1024px){.classes-grid{grid-template-columns:1fr 1fr}.plans{grid-template-columns:1fr}}
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}.nav-links,.nav-cta{display:none}.burger{display:flex}.hero-content{padding:0 1.5rem}.pillars{grid-template-columns:1fr}.classes{padding:4rem 1.5rem}.classes-header{flex-direction:column;align-items:flex-start;gap:1rem}.classes-grid{grid-template-columns:1fr}.schedule{padding:4rem 1.5rem}.schedule-table{font-size:0.78rem}.membership{padding:4rem 1.5rem}.cta{padding:5rem 1.5rem}footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="#" class="logo">Zénith Studio</a>
+  <ul class="nav-links"><li><a href="#classes">Cours</a></li><li><a href="#schedule">Horaires</a></li><li><a href="#membership">Abonnements</a></li></ul>
+  <a href="#membership" class="nav-cta">Essai gratuit</a>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Studio de yoga & bien-être · Paris 3e</div>
+    <h1>Trouver l'équilibre <strong>intérieur</strong></h1>
+    <p class="hero-desc">Un espace dédié à votre pratique et votre sérénité. Yoga, méditation et soins pour corps et esprit.</p>
+    <div class="hero-btns"><a href="#classes" class="btn-terra">Découvrir nos cours</a><a href="#membership" class="btn-ghost-terra">Essai gratuit</a></div>
+  </div>
+  <div class="hero-scroll">Scroll pour explorer</div>
+</section>
+
+<section class="pillars">
+  <div class="pillar"><span class="pillar-num">01</span><h3>Yoga pour tous</h3><p>Du débutant au pratiquant avancé, nos cours s'adaptent à votre niveau et vos besoins.</p></div>
+  <div class="pillar"><span class="pillar-num">02</span><h3>Méditation guidée</h3><p>Séances de pleine conscience pour apaiser le mental et développer la présence à soi.</p></div>
+  <div class="pillar"><span class="pillar-num">03</span><h3>Soins & ateliers</h3><p>Massages, ateliers nutrition, retraites bien-être pour une approche globale de la santé.</p></div>
+</section>
+
+<section class="classes" id="classes">
+  <div class="classes-header"><h2>Nos cours <span>du moment</span></h2><a href="#">Voir tous les cours →</a></div>
+  <div class="classes-grid">
+    <div class="class-card"><div class="class-img"><img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400" alt="Vinyasa"><div class="class-level">Intermédiaire</div></div><div class="class-body"><div class="class-name">Vinyasa Flow</div><div class="class-desc">Séquences dynamiques liées à la respiration. Chaleur, fluidité, intensité progressive.</div><div class="class-meta"><div class="class-info">60 min · <strong>Max 12</strong></div><a href="#membership" class="class-book">Réserver</a></div></div></div>
+    <div class="class-card"><div class="class-img"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400" alt="Yin Yoga"><div class="class-level">Tous niveaux</div></div><div class="class-body"><div class="class-name">Yin Yoga</div><div class="class-desc">Postures maintenues longtemps, lâcher-prise profond. Idéal pour la flexibilité et le calme.</div><div class="class-meta"><div class="class-info">75 min · <strong>Max 10</strong></div><a href="#membership" class="class-book">Réserver</a></div></div></div>
+    <div class="class-card"><div class="class-img"><img src="https://images.unsplash.com/photo-1474418397713-7ede21d49118?w=400" alt="Méditation"><div class="class-level">Débutant</div></div><div class="class-body"><div class="class-name">Méditation MBSR</div><div class="class-desc">Programme de réduction du stress basé sur la pleine conscience. Structuré sur 8 semaines.</div><div class="class-meta"><div class="class-info">45 min · <strong>Max 8</strong></div><a href="#membership" class="class-book">Réserver</a></div></div></div>
+  </div>
+</section>
+
+<section class="schedule" id="schedule">
+  <div class="schedule-header"><h2>Planning de la semaine</h2><p>Réservez votre place en ligne, places limitées</p></div>
+  <div style="overflow-x:auto">
+  <table class="schedule-table">
+    <thead><tr><th>Horaire</th><th>Lundi</th><th>Mercredi</th><th>Vendredi</th><th>Samedi</th><th>Dimanche</th></tr></thead>
+    <tbody>
+      <tr><td><strong>7h30</strong></td><td><span class="tag-class yoga">Vinyasa</span></td><td>—</td><td><span class="tag-class yoga">Vinyasa</span></td><td>—</td><td><span class="tag-class yoga">Hatha</span></td></tr>
+      <tr><td><strong>10h00</strong></td><td>—</td><td><span class="tag-class">Yin Yoga</span></td><td>—</td><td><span class="tag-class">Yin Yoga</span></td><td><span class="tag-class med">Méditation</span></td></tr>
+      <tr><td><strong>12h15</strong></td><td><span class="tag-class yoga">Hatha Express</span></td><td><span class="tag-class yoga">Hatha Express</span></td><td><span class="tag-class yoga">Hatha Express</span></td><td>—</td><td>—</td></tr>
+      <tr><td><strong>18h30</strong></td><td><span class="tag-class">Yin Yoga</span></td><td><span class="tag-class yoga">Vinyasa</span></td><td><span class="tag-class med">Méditation</span></td><td>—</td><td>—</td></tr>
+      <tr><td><strong>20h00</strong></td><td><span class="tag-class med">Méditation</span></td><td>—</td><td><span class="tag-class yoga">Vinyasa</span></td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="membership" id="membership">
+  <div class="mem-header"><h2>Choisissez votre formule</h2><p>Essai gratuit · Sans engagement · Résiliable à tout moment</p></div>
+  <div class="plans">
+    <div class="plan"><span class="plan-icon">🌿</span><div class="plan-name">Découverte</div><div class="plan-price"><sup>€</sup>49</div><div class="plan-period">/ mois</div><ul class="plan-features"><li>4 cours par mois</li><li>Accès médiathèque</li><li>Newsletter bien-être</li></ul><a href="mailto:hello@zenith-studio.fr" class="plan-btn">Commencer</a></div>
+    <div class="plan featured"><span class="plan-icon">✨</span><div class="plan-name">Équilibre</div><div class="plan-price"><sup>€</sup>89</div><div class="plan-period">/ mois</div><ul class="plan-features"><li>Cours illimités</li><li>1 soin offert / mois</li><li>Accès app & replays</li><li>Tarif atelier réduit</li></ul><a href="mailto:hello@zenith-studio.fr" class="plan-btn">Je commence</a></div>
+    <div class="plan"><span class="plan-icon">🌙</span><div class="plan-name">Sérénité</div><div class="plan-price"><sup>€</sup>149</div><div class="plan-period">/ mois</div><ul class="plan-features"><li>Cours illimités</li><li>2 soins par mois</li><li>Coaching personnalisé</li><li>Accès retraites</li><li>Priorité réservation</li></ul><a href="mailto:hello@zenith-studio.fr" class="plan-btn">Commencer</a></div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Votre premier cours <em>offert</em></h2>
+    <p>Venez découvrir notre studio sans engagement. Un professeur vous accueille et vous guide selon votre niveau.</p>
+    <a href="mailto:hello@zenith-studio.fr" class="btn-terra">Réserver mon cours offert</a>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo-text">Zénith Studio</span>
+  <p>© 2024 — 28 Rue du Temple, Paris 3e · Métro Arts & Métiers</p>
+  <div class="f-links"><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Mentions légales</a></div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',window.scrollY>80)});
+</script>
+</body>
+</html>

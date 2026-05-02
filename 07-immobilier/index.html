@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestige Immobilier — Biens d'Exception</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F7F5F2;--dark:#111010;--blue:#1B3A6B;--accent:#4A90D9;--mid:#888;--border:#E5E2DC;--white:#FFF}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:'Inter',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;background:white;border-bottom:1px solid var(--border);display:flex;align-items:stretch;height:68px}
+.nav-logo{display:flex;align-items:center;padding:0 2.5rem;border-right:1px solid var(--border);text-decoration:none}
+.nav-logo span{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);letter-spacing:0.02em}
+.nav-logo em{color:var(--blue);font-style:normal}
+.nav-center{display:flex;align-items:stretch;flex:1;padding:0 1rem}
+.nav-link{display:flex;align-items:center;padding:0 1.5rem;font-size:0.8rem;letter-spacing:0.05em;color:var(--mid);text-decoration:none;transition:color 0.3s;border-bottom:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--dark);border-color:var(--blue)}
+.nav-right{display:flex;align-items:center;gap:1rem;padding:0 2rem;margin-left:auto}
+.nav-tel{font-size:0.85rem;color:var(--blue);font-weight:500;text-decoration:none}
+.nav-cta{background:var(--blue);color:white;padding:0.6rem 1.5rem;font-size:0.78rem;font-weight:500;text-decoration:none;transition:background 0.3s}
+.nav-cta:hover{background:var(--dark)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:0 1.5rem}
+.burger span{width:22px;height:2px;background:var(--dark);display:block}
+
+/* HERO */
+.hero{margin-top:68px;position:relative;overflow:hidden;background:var(--blue)}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 68px)}
+.hero-left{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center}
+.hero-badge{display:inline-block;background:rgba(74,144,217,0.2);color:var(--accent);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.4rem 1rem;margin-bottom:2rem;border:1px solid rgba(74,144,217,0.3)}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,4.5vw,5rem);font-weight:800;color:white;line-height:1.05;margin-bottom:1.5rem}
+.hero h1 span{color:var(--accent)}
+.hero-desc{color:rgba(255,255,255,0.55);font-size:0.95rem;line-height:1.8;max-width:420px;margin-bottom:3rem;font-weight:300}
+/* SEARCH BAR */
+.search-bar{background:white;padding:1.5rem;display:flex;gap:0.8rem;flex-wrap:wrap;align-items:flex-end}
+.search-field{display:flex;flex-direction:column;gap:0.4rem;flex:1;min-width:140px}
+.search-field label{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid)}
+.search-field select,.search-field input{border:1px solid var(--border);padding:0.7rem;font-family:'Inter',sans-serif;font-size:0.85rem;color:var(--dark);background:white;outline:none}
+.search-btn{background:var(--blue);color:white;border:none;padding:0.8rem 2rem;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:background 0.3s;white-space:nowrap}
+.search-btn:hover{background:var(--dark)}
+.hero-right{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(0.9)}
+.hero-img-overlay{position:absolute;inset:0;background:rgba(27,58,107,0.2)}
+.hero-stats{position:absolute;bottom:2rem;left:2rem;right:2rem;display:flex;gap:1px;background:rgba(255,255,255,0.1)}
+.h-stat{background:rgba(255,255,255,0.9);padding:1.2rem;text-align:center;flex:1;backdrop-filter:blur(8px)}
+.h-stat-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--blue);display:block}
+.h-stat-label{font-size:0.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:0.1em}
+
+/* BIENS */
+.listings{padding:5rem 4rem}
+.section-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem}
+.section-top h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,3rem);font-weight:700}
+.section-top h2 span{color:var(--blue)}
+.tabs{display:flex;gap:0;border:1px solid var(--border)}
+.tab{padding:0.6rem 1.5rem;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:white;border:none;font-family:'Inter',sans-serif;color:var(--mid);transition:all 0.3s}
+.tab.active,.tab:hover{background:var(--blue);color:white}
+.listings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:white;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;border:1px solid var(--border)}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.1)}
+.card-img{position:relative;overflow:hidden;height:220px}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
+.card:hover .card-img img{transform:scale(1.06)}
+.card-badge{position:absolute;top:1rem;left:1rem;background:var(--blue);color:white;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.35rem 0.8rem}
+.card-badge.new{background:#16A34A}
+.card-fav{position:absolute;top:1rem;right:1rem;width:32px;height:32px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;transition:background 0.3s}
+.card-fav:hover{background:var(--accent);color:white}
+.card-body{padding:1.5rem}
+.card-price{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--blue);margin-bottom:0.3rem}
+.card-title{font-size:0.95rem;font-weight:500;margin-bottom:0.3rem}
+.card-loc{font-size:0.8rem;color:var(--mid);margin-bottom:1rem;display:flex;align-items:center;gap:0.3rem}
+.card-specs{display:flex;gap:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}
+.spec{font-size:0.78rem;color:var(--mid);display:flex;align-items:center;gap:0.3rem}
+.spec strong{color:var(--dark);font-weight:500}
+
+/* WHY */
+.why{background:var(--dark);padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.why-left h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,3vw,3.5rem);font-weight:700;color:white;margin-bottom:1.5rem}
+.why-left h2 span{color:var(--accent)}
+.why-left p{color:rgba(255,255,255,0.45);font-size:0.9rem;line-height:1.8;font-weight:300;margin-bottom:2rem}
+.why-cta{background:var(--accent);color:white;padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;font-weight:500;transition:all 0.3s;display:inline-block}
+.why-cta:hover{background:white;color:var(--blue)}
+.why-right{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.05)}
+.why-item{background:rgba(255,255,255,0.02);padding:2rem;display:flex;gap:1.5rem;align-items:flex-start;transition:background 0.3s}
+.why-item:hover{background:rgba(255,255,255,0.05)}
+.why-icon{font-size:1.5rem;flex-shrink:0;margin-top:0.1rem}
+.why-item h3{font-family:'Syne',sans-serif;font-size:1rem;color:white;margin-bottom:0.4rem;font-weight:600}
+.why-item p{font-size:0.85rem;color:rgba(255,255,255,0.35);line-height:1.6;font-weight:300}
+
+/* ESTIMATION */
+.estimation{background:var(--accent);padding:5rem 4rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.estimation h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,3rem);color:white;font-weight:700}
+.estimation p{color:rgba(255,255,255,0.7);margin-top:0.5rem;font-weight:300}
+.btn-w{background:white;color:var(--blue);padding:1rem 2.5rem;text-decoration:none;font-size:0.8rem;font-weight:600;transition:all 0.3s;flex-shrink:0}
+.btn-w:hover{background:var(--dark);color:white}
+
+footer{background:#0A0A0A;padding:4rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.f-logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:white;margin-bottom:1rem;display:block}
+.f-logo em{color:var(--accent);font-style:normal}
+footer p{color:rgba(255,255,255,0.25);font-size:0.82rem;line-height:1.7}
+.f-col h4{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:0.7rem}
+.f-col ul a{color:rgba(255,255,255,0.3);font-size:0.82rem;text-decoration:none;transition:color 0.3s}
+.f-col ul a:hover{color:white}
+.f-bottom{background:#060606;padding:1.5rem 4rem;display:flex;justify-content:space-between;color:rgba(255,255,255,0.2);font-size:0.75rem}
+
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}.hero-right{height:350px}.listings-grid{grid-template-columns:1fr 1fr}.why{grid-template-columns:1fr}.footer{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{height:auto;flex-wrap:wrap;padding:1rem}.nav-logo{border:none;padding:0.5rem 1rem}.nav-center,.nav-right,.nav-tel{display:none}.burger{display:flex}.hero{margin-top:56px}.hero-left{padding:3rem 1.5rem}.hero-right{height:280px}.hero-stats{position:relative;bottom:auto;left:auto;right:auto;margin:0}.search-bar{flex-direction:column}.listings{padding:4rem 1.5rem}.section-top{flex-direction:column;align-items:flex-start;gap:1rem}.listings-grid{grid-template-columns:1fr}.why{grid-template-columns:1fr;padding:4rem 1.5rem;gap:3rem}.estimation{padding:4rem 1.5rem;flex-direction:column}footer{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}.f-bottom{flex-direction:column;gap:0.5rem;padding:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo"><span>Prestige<em>Immo</em></span></a>
+  <div class="nav-center">
+    <a href="#listings" class="nav-link active">Acheter</a>
+    <a href="#" class="nav-link">Louer</a>
+    <a href="#" class="nav-link">Vendre</a>
+    <a href="#" class="nav-link">Notre agence</a>
+  </div>
+  <div class="nav-right">
+    <a href="tel:+33140000000" class="nav-tel">+33 1 40 00 00 00</a>
+    <a href="#estimation" class="nav-cta">Estimation gratuite</a>
+  </div>
+  <div class="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">Agence immobilière · Paris & Île-de-France</div>
+      <h1>Trouvez le bien qui vous <span>ressemble</span></h1>
+      <p class="hero-desc">Appartements, maisons et biens d'exception. Nos experts vous accompagnent à chaque étape de votre projet immobilier.</p>
+      <div class="search-bar">
+        <div class="search-field"><label>Type de bien</label><select><option>Appartement</option><option>Maison</option><option>Commerce</option></select></div>
+        <div class="search-field"><label>Ville</label><input type="text" placeholder="Paris, Lyon..."></div>
+        <div class="search-field"><label>Budget max</label><select><option>300 000 €</option><option>500 000 €</option><option>1 000 000 €</option><option>+</option></select></div>
+        <button class="search-btn">Rechercher</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" class="hero-img" alt="Bien immobilier">
+      <div class="hero-img-overlay"></div>
+      <div class="hero-stats">
+        <div class="h-stat"><span class="h-stat-num">850+</span><span class="h-stat-label">Biens vendus</span></div>
+        <div class="h-stat"><span class="h-stat-num">98%</span><span class="h-stat-label">Clients satisfaits</span></div>
+        <div class="h-stat"><span class="h-stat-num">12</span><span class="h-stat-label">Ans d'expérience</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="listings" id="listings">
+  <div class="section-top">
+    <h2>Nos biens <span>en vedette</span></h2>
+    <div class="tabs"><button class="tab active">Vente</button><button class="tab">Location</button><button class="tab">Prestige</button></div>
+  </div>
+  <div class="listings-grid">
+    <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400" alt="Appartement"><div class="card-badge new">Nouveau</div><div class="card-fav">♡</div></div><div class="card-body"><div class="card-price">485 000 €</div><div class="card-title">Appartement Haussmannien</div><div class="card-loc">📍 Paris 8e — Champs-Élysées</div><div class="card-specs"><span class="spec"><strong>4</strong> pièces</span><span class="spec"><strong>95</strong> m²</span><span class="spec"><strong>2</strong> ch.</span></span></div></div></div>
+    <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400" alt="Maison"><div class="card-badge">Exclusivité</div><div class="card-fav">♡</div></div><div class="card-body"><div class="card-price">1 250 000 €</div><div class="card-title">Maison avec jardin</div><div class="card-loc">📍 Neuilly-sur-Seine</div><div class="card-specs"><span class="spec"><strong>6</strong> pièces</span><span class="spec"><strong>180</strong> m²</span><span class="spec"><strong>4</strong> ch.</span></div></div></div>
+    <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400" alt="Loft"><div class="card-fav">♡</div></div><div class="card-body"><div class="card-price">650 000 €</div><div class="card-title">Loft Industriel Rénové</div><div class="card-loc">📍 Paris 11e — Bastille</div><div class="card-specs"><span class="spec"><strong>3</strong> pièces</span><span class="spec"><strong>120</strong> m²</span><span class="spec"><strong>1</strong> ch.</span></div></div></div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="why-left">
+    <h2>Pourquoi choisir <span>PrestigeImmo</span> ?</h2>
+    <p>Une agence à taille humaine avec l'efficacité d'un grand réseau. Nos agents sont des experts locaux qui connaissent chaque rue, chaque immeuble.</p>
+    <a href="#contact" class="why-cta">Rencontrer nos agents</a>
+  </div>
+  <div class="why-right">
+    <div class="why-item"><span class="why-icon">🏆</span><div><h3>Expertise locale</h3><p>Des agents qui vivent dans les quartiers qu'ils vendent. Une connaissance du marché sans équivalent.</p></div></div>
+    <div class="why-item"><span class="why-icon">⚡</span><div><h3>Réactivité maximale</h3><p>Réponse garantie sous 2h. Visites organisées en 24h. Offre d'achat sécurisée en 48h.</p></div></div>
+    <div class="why-item"><span class="why-icon">🔒</span><div><h3>Transaction sécurisée</h3><p>Accompagnement juridique complet, de l'offre à la signature chez le notaire.</p></div></div>
+    <div class="why-item"><span class="why-icon">📊</span><div><h3>Estimation juste</h3><p>Valorisation précise basée sur les données du marché en temps réel.</p></div></div>
+  </div>
+</section>
+
+<div class="estimation" id="estimation">
+  <div><h2>Combien vaut votre bien ?</h2><p>Estimation gratuite et sans engagement en 48h par nos experts.</p></div>
+  <a href="mailto:contact@prestigeimmo.fr" class="btn-w">Demander une estimation →</a>
+</div>
+
+<footer>
+  <div><span class="f-logo">Prestige<em>Immo</em></span><p>Agence immobilière spécialisée dans les biens de standing à Paris et en Île-de-France depuis 2012.</p></div>
+  <div class="f-col"><h4>Services</h4><ul><li><a href="#">Achat</a></li><li><a href="#">Vente</a></li><li><a href="#">Location</a></li><li><a href="#">Gestion locative</a></li></ul></div>
+  <div class="f-col"><h4>Zones</h4><ul><li><a href="#">Paris intra-muros</a></li><li><a href="#">Hauts-de-Seine</a></li><li><a href="#">Val-de-Marne</a></li></ul></div>
+  <div class="f-col"><h4>Contact</h4><ul><li><a href="#">12 Av. Kléber, Paris 16e</a></li><li><a href="#">+33 1 40 00 00 00</a></li><li><a href="#">contact@prestigeimmo.fr</a></li></ul></div>
+</footer>
+<div class="f-bottom"><span>© 2024 PrestigeImmo</span><span>Mentions légales · RGPD · Carte pro CPI</span></div>
+
+<script>
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active')}));
+</script>
+</body>
+</html>
